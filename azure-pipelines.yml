@@ -1,0 +1,27 @@
+trigger:
+  - master
+
+
+strategy:
+  matrix:
+    linux:
+      imageName: 'ubuntu-latest'
+    windows:
+      imageName: 'windows-latest'
+    mac:
+      imageName: 'macos-latest'
+
+pool:
+  vmImage: $(imageName)
+
+steps:
+- script: echo "Building on $(imageName)"
+  displayName: 'Run build script'
+
+
+- script: echo "Testing on $(imageName)"
+  displayName: 'Run test script'
+
+
+- script: echo "Testing on $(imageName)"
+  displayName: 'Run test script'
