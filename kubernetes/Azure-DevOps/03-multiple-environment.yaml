@@ -1,0 +1,62 @@
+# This is Azure pipline demonstrating the multiple environment strategy using matrix strategy.
+# In deploy stage, we are deploying to multiple environments using matrix strategy. 
+
+
+trigger:
+  -master
+
+
+strategy:
+  matrix:
+    linux:
+      imageName: 'ubuntu-latest'
+    windows:
+      imageName: 'windows-latest'
+    mac:
+      imageName: 'macos-latest'
+
+strategy:
+  matrix:
+    linux:
+      environement: 'Dev'
+    windows:
+      environement: 'stage'
+    mac:
+      environement: 'prod'
+
+
+pool:
+  vmImage: $(imageName)
+
+
+
+stages:
+  - stage: Build
+    displayName: 'Build Stage'
+    jobs:
+      - job: BuildJob
+        displayName: 'Build Job'
+        steps:
+          - script: echo "Building on $(imageName)"
+            displayName: 'Run build script'
+
+  - stage: Test
+    displayName: 'Test Stage'
+    dependsOn: Build
+    jobs:
+      - job: TestJob
+        displayName: 'Test Job'
+        steps:
+          - script: echo "Testing on $(imageName)"
+            displayName: 'Run test script'
+
+  - stage: Deploy
+    displayName: 'Deploy Stage'
+    dependsOn: Test
+    jobs:
+      - job: DeployJob
+        environment: $(environement)
+        displayName: 'Deploy Job'
+        steps:
+          - script: echo "Deploying on $(imageName)"
+            displayName: 'Run deploy script'
