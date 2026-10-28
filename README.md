@@ -13,4 +13,5 @@ watch -n 1 "kubectl- get pods"
 Vim editor commands:
 dG  :Deletes everything from the current cursor position to the end of the file.
 vw  : Start selecting text from the current cursor position up to the beginning of the next word.
+:set paste : for paste formatting
 
