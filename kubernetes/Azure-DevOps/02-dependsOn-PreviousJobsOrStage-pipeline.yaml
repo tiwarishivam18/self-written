@@ -1,0 +1,33 @@
+# Rule of game: The strategy matrix must be in one job. It can not be subsided under a stage. 
+# The pool must be defined at the job level. 
+# The steps must be defined at the job level. 
+# The trigger must be defined at the top level of the YAML file.
+
+
+trigger:
+  - master
+
+
+strategy:
+  matrix:
+    linux:
+      imageName: 'ubuntu-latest'
+    windows:
+      imageName: 'windows-latest'
+    mac:
+      imageName: 'macos-latest'
+
+pool:
+  vmImage: $(imageName)
+
+steps:
+- script: echo "Building on $(imageName)"
+  displayName: 'Run build script'
+
+
+- script: echo "Testing on $(imageName)"
+  displayName: 'Run test script'
+
+
+- script: echo "Testing on $(imageName)"
+  displayName: 'Run test script'

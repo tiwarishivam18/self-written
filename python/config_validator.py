@@ -31,7 +31,12 @@ def validate_config(config: dict) -> bool:
     #     return False
     elif not all(key in config for key in required_keys):
         return False
-    elif config['env'] not in env_values or not isinstance(config['service_name'], str) or not config['service_name'].strip() or not isinstance(config['port'], int) or not (1 <= config['port'] <= 65535)  :
+    elif (config['env'] not in env_values 
+        or not isinstance(config['service_name'], str) 
+        or not config['service_name'].strip() 
+        or not isinstance(config['port'], int) 
+        or not (1 <= config['port'] <= 65535)  
+    ):
         return False
     else:
         return True
